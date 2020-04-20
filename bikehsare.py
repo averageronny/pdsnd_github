@@ -241,7 +241,6 @@ def print_raw(df):
             continue
 
 
-
 def main():
     while True:
         city, month, day = get_filters()

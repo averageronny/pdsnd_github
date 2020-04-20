@@ -2,9 +2,10 @@ import time
 import pandas as pd
 import numpy as np
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+CITY_DATA = {'chicago': 'chicago.csv',
+             'new york city': 'new_york_city.csv',
+             'washington': 'washington.csv'}
+
 
 def get_filters():
     """
@@ -20,7 +21,8 @@ def get_filters():
     options = ('chicago', 'new york city', 'washington')
     while True:
         try:
-            city = input('Please enter the city you want to analyze. Possible options are Chicago, New York City and Washington: ').lower()
+            city = input(
+                'Please enter the city you want to analyze. Possible options are Chicago, New York City and Washington: ').lower()
             if city in options:
                 break
             else:
@@ -30,11 +32,12 @@ def get_filters():
             continue
 
     # TO DO: get user input for month (all, january, february, ... , june)
-    yesno = ('yes', 'no')
+    decider = ('yes', 'no')
     while True:
         try:
-            filter_month = input('Do you want to filter the Month? Type: Yes or No: ').lower()
-            if filter_month in yesno:
+            filter_month = input(
+                'Do you want to filter the Month? Type: Yes or No: ').lower()
+            if filter_month in decider:
                 break
             else:
                 raise ValueError
@@ -45,7 +48,8 @@ def get_filters():
     if filter_month == 'yes':
         while True:
             try:
-                month = input('For which month do you want to filter. Please type the first 3 letters of the month (e.g. mar): ').lower()
+                month = input(
+                    'For which month do you want to filter. Please type the first 3 letters of the month (e.g. mar): ').lower()
                 if month in month_options:
                     break
                 else:
@@ -59,8 +63,9 @@ def get_filters():
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     while True:
         try:
-            filter_day = input('Do you want to filter the Day? Type: Yes or No: ').lower()
-            if filter_day in yesno:
+            filter_day = input(
+                'Do you want to filter the Day? Type: Yes or No: ').lower()
+            if filter_day in decider:
                 break
             else:
                 raise ValueError
@@ -71,7 +76,8 @@ def get_filters():
     if filter_day == 'yes':
         while True:
             try:
-                day = input('For which weekday do you want to filter. Please type the first three letters of the weekday (e.g. wed): ').lower()
+                day = input(
+                    'For which weekday do you want to filter. Please type the first three letters of the weekday (e.g. wed): ').lower()
                 if day in day_options:
                     break
                 else:
@@ -105,7 +111,8 @@ def load_data(city, month, day):
         df = df[df['month'] == month]
     df['day_of_week'] = pd.to_datetime(df['Start Time']).dt.weekday
     if day != 'all':
-        d = {'mon': 0, 'tue': 1, 'wed': 2, 'thu': 3, 'fri': 4, 'sat': 5, 'sun': 6}
+        d = {'mon': 0, 'tue': 1, 'wed': 2,
+             'thu': 3, 'fri': 4, 'sat': 5, 'sun': 6}
         day = d[day]
         df = df[df['day_of_week'] == day]
     return df
@@ -119,14 +126,15 @@ def time_stats(df):
 
     # TO DO: display the most common month
     df['month'] = pd.to_datetime(df['Start Time']).dt.month
-    m={1: 'January', 2: 'February', 3: 'March', 4: 'April', 5:'May', 6:'June'}
+    m = {1: 'January', 2: 'February', 3: 'March',
+         4: 'April', 5: 'May', 6: 'June'}
     month = m[df['month'].mode()[0]]
     print('The most common month is {}.'.format(month))
 
-
     # TO DO: display the most common day of week
     df['day_of_week'] = pd.to_datetime(df['Start Time']).dt.weekday
-    d={0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5:'Saturday', 6:'Sunday'}
+    d = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday',
+         3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
     day = d[df['day_of_week'].mode()[0]]
     print('The most common weekday is {}.'.format(day))
 
@@ -154,8 +162,9 @@ def station_stats(df):
     print('The most commonly used end station is: {}'.format(end_station))
 
     # TO DO: display most frequent combination of start station and end station trip
-    combination = df.groupby(['Start Station','End Station']).size().idxmax()
-    print('The most frequent combination is between start station "{}" and end station "{}".'.format(combination[0], combination[-1]))
+    combination = df.groupby(['Start Station', 'End Station']).size().idxmax()
+    print('The most frequent combination is between start station "{}" and end station "{}".'.format(
+        combination[0], combination[-1]))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -169,13 +178,12 @@ def trip_duration_stats(df):
 
     # TO DO: display total travel time
     total_travel_time = df['Trip Duration'].sum()
-    print('The total travel time in minutes is {},\nin hours it is {},\nin days it would be {}\nand in years it would be {}.'.format(total_travel_time/60, total_travel_time/360, total_travel_time/8640, total_travel_time/3153600))
-
+    print('The total travel time in minutes is {},\nin hours it is {},\nin days it would be {}\nand in years it would be {}.'.format(
+        total_travel_time/60, total_travel_time/360, total_travel_time/8640, total_travel_time/3153600))
 
     # TO DO: display mean travel time
     avg_travel_time = df['Trip Duration'].mean()
     print('\nThe average travel time in minutes is {}'.format(avg_travel_time/60))
-
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -189,12 +197,11 @@ def user_stats(df):
 
     # TO DO: Display counts of user types
     user_types = df.groupby('User Type')['Start Time'].nunique()
-    print(user_types.to_string(),'\n')
-
+    print(user_types.to_string(), '\n')
 
     # TO DO: Display counts of gender
     gender = df.groupby('Gender')['Start Time'].nunique()
-    print(gender.to_string(),'\n')
+    print(gender.to_string(), '\n')
 
     # TO DO: Display earliest, most recent, and most common year of birth
     earliest_by = df['Birth Year'].min()
@@ -213,13 +220,15 @@ def user_stats(df):
 def print_raw(df):
     while True:
         try:
-            print_init = input('Do you want to print a sample? Yes or No: ').lower()
+            print_init = input(
+                'Do you want to print a sample? Yes or No: ').lower()
             if print_init in ('yes', 'y'):
                 i = 0
                 while True:
                     print(df.iloc[i:i+5])
                     i += 5
-                    more_data = input('Would you like to see more data? Please enter Yes or No: ').lower()
+                    more_data = input(
+                        'Would you like to see more data? Please enter Yes or No: ').lower()
                     if more_data not in ('yes', 'y'):
                         break
                 break
@@ -230,8 +239,6 @@ def print_raw(df):
         except ValueError:
             print("That was no valid input.  Try again...")
             continue
-            
-
 
 
 
@@ -253,4 +260,4 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+    main()

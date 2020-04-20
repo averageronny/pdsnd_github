@@ -17,3 +17,5 @@ The files used are:
 I got some inspiration from [this](https://github.com/udacity/course-collaboration-travel-plans) repo of udacity.
 Moreover I have to credit the GitHub guide for helping me dealing with [markdown](https://guides.github.com/features/mastering-markdown/)
 
+#### Greetings
+I would like to greet everyone who is taking the time to read all this.

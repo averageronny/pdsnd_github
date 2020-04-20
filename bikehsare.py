@@ -248,6 +248,7 @@ def main():
         print_raw(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
+        #Test whether the program should start again
         if restart.lower() != 'yes':
             break
 
